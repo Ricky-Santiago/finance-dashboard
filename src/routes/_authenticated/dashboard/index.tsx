@@ -1,13 +1,14 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useAuth } from '@/context/auth-context'
 import { supabase } from '@/lib/supabase'
+import { useNavigate } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: DashboardPage,
 })
 
 function DashboardPage() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -15,8 +16,10 @@ function DashboardPage() {
     navigate({ to: '/login' })
   }
 
+  const displayName = profile?.full_name ?? user?.email
+
   return (
-    <div className="min-h-screen bg-gray-950 p-8">
+    <div className="p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
@@ -27,7 +30,7 @@ function DashboardPage() {
             Cerrar sesión
           </button>
         </div>
-        <p className="text-gray-400">Bienvenido, {user?.email}</p>
+        <p className="text-gray-400">Bienvenido, {displayName} 👋</p>
       </div>
     </div>
   )

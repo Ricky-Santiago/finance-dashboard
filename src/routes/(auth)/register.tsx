@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { supabase } from '@/lib/supabase'
 import { registerSchema, type RegisterForm } from '@/lib/schemas/auth'
 
-export const Route = createFileRoute('/register')({
+export const Route = createFileRoute('/(auth)/register')({
   component: RegisterPage,
 })
 
@@ -21,17 +21,29 @@ function RegisterPage() {
   })
 
   const onSubmit = async (data: RegisterForm) => {
-    const { error } = await supabase.auth.signUp({
+    const { data: authData, error: signUpError } = await supabase.auth.signUp({
       email: data.email,
       password: data.password,
     })
 
-    if (error) {
-      setError('root', { message: error.message })
+    if (signUpError) {
+      setError('root', { message: signUpError.message })
       return
     }
 
-    navigate({ to: '/' })
+    if (authData.user) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ full_name: data.fullName })
+        .eq('id', authData.user.id)
+
+      if (profileError) {
+        setError('root', { message: 'Error al guardar el perfil' })
+        return
+      }
+    }
+
+    navigate({ to: '/dashboard' })
   }
 
   return (
@@ -41,6 +53,19 @@ function RegisterPage() {
         <p className="text-gray-400 mb-6">Regístrate para empezar</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm text-gray-400">Nombre completo</label>
+            <input
+              {...register('fullName')}
+              type="text"
+              placeholder="Juan Pérez García"
+              className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.fullName && (
+              <span className="text-red-400 text-xs">{errors.fullName.message}</span>
+            )}
+          </div>
+
           <div className="flex flex-col gap-1">
             <label className="text-sm text-gray-400">Email</label>
             <input

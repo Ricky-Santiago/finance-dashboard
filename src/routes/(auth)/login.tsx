@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { loginSchema, type LoginForm } from "@/lib/schemas/auth";
 
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/(auth)/login")({
   component: LoginPage,
 });
 
