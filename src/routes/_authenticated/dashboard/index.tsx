@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AuthenticatedLayout } from '@/components/layout/authenticated-layout'
+import { MetricCards } from '@/features/dashboard/components/metric-cards'
 import { useAuth } from '@/context/auth-context'
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
@@ -12,7 +13,10 @@ function DashboardPage() {
 
   return (
     <AuthenticatedLayout title="Dashboard">
-      <p className="text-gray-400">Bienvenido, {displayName} 👋</p>
+      <div className="flex flex-col gap-6">
+        <p className="text-gray-400">Bienvenido, {displayName} 👋</p>
+        <MetricCards />
+      </div>
     </AuthenticatedLayout>
   )
 }
