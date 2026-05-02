@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AuthenticatedLayout } from '@/components/layout/authenticated-layout'
+import { TransactionsFeature } from '@/features/transactions'
 
 export const Route = createFileRoute('/_authenticated/transactions/')({
   component: TransactionsPage,
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/_authenticated/transactions/')({
 function TransactionsPage() {
   return (
     <AuthenticatedLayout title="Transacciones">
-      <p className="text-gray-400">Próximamente...</p>
+      <TransactionsFeature />
     </AuthenticatedLayout>
   )
 }
