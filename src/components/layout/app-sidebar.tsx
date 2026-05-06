@@ -42,7 +42,28 @@ export function AppSidebar() {
       </nav>
 
       <div className="p-4 border-t border-gray-800">
-        <p className="text-gray-400 text-xs truncate">{displayName}</p>
+        <Link
+          to="/settings"
+          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+        >
+          <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden flex-shrink-0">
+            {profile?.avatar_url ? (
+              <img
+                src={profile.avatar_url}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-white text-xs font-bold">
+                {displayName?.[0]?.toUpperCase()}
+              </span>
+            )}
+          </div>
+          <div className="flex flex-col min-w-0">
+            <p className="text-white text-xs font-medium truncate">{displayName}</p>
+            <p className="text-gray-500 text-xs truncate">{user?.email}</p>
+          </div>
+        </Link>
       </div>
     </aside>
   )
