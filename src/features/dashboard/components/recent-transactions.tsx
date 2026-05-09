@@ -16,23 +16,32 @@ export function RecentTransactions() {
         supabase.from('transactions').select('*').order('date', { ascending: false }).limit(5),
         supabase.from('categories').select('*'),
       ])
-
       if (txData) setTransactions(txData)
       if (catData) setCategories(catData)
       setIsLoading(false)
     }
-
     fetchData()
   }, [])
 
   if (isLoading) {
-    return <div className="bg-gray-900 rounded-xl p-6 border border-gray-800 animate-pulse h-48" />
+    return (
+      <div
+        className="rounded-xl p-6 animate-pulse h-48"
+        style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+      />
+    )
   }
 
   return (
-    <div className="bg-gray-900 rounded-xl border border-gray-800">
-      <div className="flex items-center justify-between p-6 border-b border-gray-800">
-        <h3 className="text-white font-medium">Transacciones recientes</h3>
+    <div
+      className="rounded-xl"
+      style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+    >
+      <div
+        className="flex items-center justify-between p-6"
+        style={{ borderBottom: '1px solid var(--border-color)' }}
+      >
+        <h3 className="font-medium" style={{ color: 'var(--text-primary)' }}>Transacciones recientes</h3>
         <Link
           to="/transactions"
           className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1 transition-colors"
@@ -44,32 +53,31 @@ export function RecentTransactions() {
 
       {transactions.length === 0 ? (
         <div className="p-6">
-          <p className="text-gray-400 text-sm">No hay transacciones aún.</p>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>No hay transacciones aún.</p>
         </div>
       ) : (
-        <ul className="divide-y divide-gray-800">
+        <ul>
           {transactions.map(tx => {
             const category = categories.find(c => c.id === tx.category_id)
             return (
-              <li key={tx.id} className="flex items-center justify-between px-6 py-4">
+              <li
+                key={tx.id}
+                className="flex items-center justify-between px-6 py-4"
+                style={{ borderBottom: '1px solid var(--border-color)' }}
+              >
                 <div className="flex items-center gap-3">
                   {category && (
-                    <div
-                      className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: category.color }}
-                    />
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: category.color }} />
                   )}
                   <div>
-                    <p className="text-white text-sm font-medium">{tx.title}</p>
-                    <p className="text-gray-500 text-xs">
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{tx.title}</p>
+                    <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
                       {new Date(tx.date).toLocaleDateString('es-PE')}
                       {category && ` · ${category.name}`}
                     </p>
                   </div>
                 </div>
-                <span className={`text-sm font-semibold ${
-                  tx.type === 'income' ? 'text-green-400' : 'text-red-400'
-                }`}>
+                <span className={`text-sm font-semibold ${tx.type === 'income' ? 'text-green-400' : 'text-red-400'}`}>
                   {tx.type === 'income' ? '+' : '-'}${tx.amount.toFixed(2)}
                 </span>
               </li>

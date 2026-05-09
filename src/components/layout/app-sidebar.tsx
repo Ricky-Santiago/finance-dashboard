@@ -27,20 +27,30 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
   const displayName = profile?.full_name ?? user?.email
 
   return (
-    <aside className={`
-      fixed md:static inset-y-0 left-0 z-30
-      w-64 min-h-screen bg-gray-900 flex flex-col border-r border-gray-800
-      transform transition-transform duration-300 ease-in-out
-      ${open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-    `}>
-      <div className="p-6 border-b border-gray-800 flex items-center justify-between">
+    <aside
+      className={`
+        fixed md:static inset-y-0 left-0 z-30
+        w-64 min-h-screen flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderRight: '1px solid var(--border-color)',
+      }}
+    >
+      <div
+        className="p-6 flex items-center justify-between"
+        style={{ borderBottom: '1px solid var(--border-color)' }}
+      >
         <div>
-          <h1 className="text-white font-bold text-lg">Finance</h1>
-          <p className="text-gray-400 text-xs mt-1">Dashboard</p>
+          <h1 className="font-bold text-lg" style={{ color: 'var(--text-primary)' }}>Finance</h1>
+          <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>Dashboard</p>
         </div>
         <button
           onClick={onClose}
-          className="md:hidden text-gray-400 hover:text-white transition-colors"
+          className="md:hidden transition-colors"
+          style={{ color: 'var(--text-secondary)' }}
         >
           <X size={20} />
         </button>
@@ -52,8 +62,14 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
             key={item.to}
             to={item.to}
             onClick={onClose}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors text-sm"
-            activeProps={{ className: 'flex items-center gap-3 px-3 py-2 rounded-lg text-white bg-gray-800 text-sm' }}
+            className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm"
+            style={{ color: 'var(--text-secondary)' }}
+            activeProps={{
+              style: {
+                backgroundColor: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+              },
+            }}
           >
             <item.icon size={18} />
             {item.label}
@@ -61,24 +77,30 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-gray-800">
+      <div
+        className="p-4"
+        style={{ borderTop: '1px solid var(--border-color)' }}
+      >
         <Link
           to="/settings"
           onClick={onClose}
           className="flex items-center gap-3 hover:opacity-80 transition-opacity"
         >
-          <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden flex-shrink-0">
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden flex-shrink-0"
+            style={{ backgroundColor: 'var(--bg-tertiary)' }}
+          >
             {profile?.avatar_url ? (
               <img src={profile.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-white text-xs font-bold">
+              <span className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>
                 {displayName?.[0]?.toUpperCase()}
               </span>
             )}
           </div>
           <div className="flex flex-col min-w-0">
-            <p className="text-white text-xs font-medium truncate">{displayName}</p>
-            <p className="text-gray-500 text-xs truncate">{user?.email}</p>
+            <p className="text-xs font-medium truncate" style={{ color: 'var(--text-primary)' }}>{displayName}</p>
+            <p className="text-xs truncate" style={{ color: 'var(--text-tertiary)' }}>{user?.email}</p>
           </div>
         </Link>
       </div>

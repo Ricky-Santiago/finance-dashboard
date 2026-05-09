@@ -31,50 +31,56 @@ export function TransactionFormComponent({ categories, onAdd }: TransactionFormP
     })
   }
 
+  const inputStyle = {
+    backgroundColor: 'var(--bg-tertiary)',
+    color: 'var(--text-primary)',
+    border: '1px solid var(--border-color)',
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-      <h3 className="text-white font-medium mb-4">Nueva transacción</h3>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="rounded-xl p-6"
+      style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+    >
+      <h3 className="font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Nueva transacción</h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Título</label>
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Título</label>
           <input
             {...register('title')}
             placeholder="Ej: Salario, Supermercado"
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="rounded-lg px-4 py-2 outline-none text-sm"
+            style={inputStyle}
           />
           {errors.title && <span className="text-red-400 text-xs">{errors.title.message}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Monto</label>
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Monto</label>
           <input
             {...register('amount')}
             type="number"
             step="0.01"
             placeholder="0.00"
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="rounded-lg px-4 py-2 outline-none text-sm"
+            style={inputStyle}
           />
           {errors.amount && <span className="text-red-400 text-xs">{errors.amount.message}</span>}
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Tipo</label>
-          <select
-            {...register('type')}
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          >
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Tipo</label>
+          <select {...register('type')} className="rounded-lg px-4 py-2 outline-none text-sm" style={inputStyle}>
             <option value="expense">Gasto</option>
             <option value="income">Ingreso</option>
           </select>
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Categoría</label>
-          <select
-            {...register('category_id')}
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          >
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Categoría</label>
+          <select {...register('category_id')} className="rounded-lg px-4 py-2 outline-none text-sm" style={inputStyle}>
             <option value="">Selecciona una categoría</option>
             {categories.map(cat => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -84,11 +90,12 @@ export function TransactionFormComponent({ categories, onAdd }: TransactionFormP
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Fecha</label>
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Fecha</label>
           <input
             {...register('date')}
             type="date"
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="rounded-lg px-4 py-2 outline-none text-sm"
+            style={inputStyle}
           />
           {errors.date && <span className="text-red-400 text-xs">{errors.date.message}</span>}
         </div>

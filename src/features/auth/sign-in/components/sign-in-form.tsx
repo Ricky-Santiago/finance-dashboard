@@ -30,32 +30,36 @@ export function SignInForm() {
     navigate({ to: '/dashboard' })
   }
 
+  const inputStyle = {
+    backgroundColor: 'var(--bg-tertiary)',
+    color: 'var(--text-primary)',
+    border: '1px solid var(--border-color)',
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Email</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Email</label>
         <input
           {...register('email')}
           type="email"
           placeholder="tu@email.com"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.email && (
-          <span className="text-red-400 text-xs">{errors.email.message}</span>
-        )}
+        {errors.email && <span className="text-red-400 text-xs">{errors.email.message}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Contraseña</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Contraseña</label>
         <input
           {...register('password')}
           type="password"
           placeholder="••••••••"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.password && (
-          <span className="text-red-400 text-xs">{errors.password.message}</span>
-        )}
+        {errors.password && <span className="text-red-400 text-xs">{errors.password.message}</span>}
       </div>
 
       {errors.root && (
@@ -72,7 +76,7 @@ export function SignInForm() {
         {isSubmitting ? 'Iniciando sesión...' : 'Iniciar sesión'}
       </button>
 
-      <p className="text-center text-gray-400 text-sm">
+      <p className="text-center text-sm" style={{ color: 'var(--text-secondary)' }}>
         ¿No tienes cuenta?{' '}
         <Link to="/register" className="text-blue-400 hover:text-blue-300">
           Regístrate

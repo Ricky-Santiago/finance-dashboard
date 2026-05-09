@@ -11,7 +11,7 @@ export function AuthenticatedLayout({ title, children }: AuthenticatedLayoutProp
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-gray-950">
+    <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <AppSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {sidebarOpen && (

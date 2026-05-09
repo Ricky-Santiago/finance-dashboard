@@ -18,7 +18,6 @@ export function CategoryForm({ onAdd }: CategoryFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim()) return
-
     setIsLoading(true)
     await onAdd(name.trim(), color)
     setName('')
@@ -26,22 +25,31 @@ export function CategoryForm({ onAdd }: CategoryFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-      <h3 className="text-white font-medium mb-4">Nueva categoría</h3>
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-xl p-6"
+      style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+    >
+      <h3 className="font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Nueva categoría</h3>
 
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-400">Nombre</label>
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Nombre</label>
           <input
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="Ej: Comida, Salario, Transporte"
-            className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="rounded-lg px-4 py-2 outline-none text-sm"
+            style={{
+              backgroundColor: 'var(--bg-tertiary)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
+            }}
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-400">Color</label>
+          <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Color</label>
           <div className="flex gap-2 flex-wrap">
             {COLORS.map(c => (
               <button
@@ -49,10 +57,7 @@ export function CategoryForm({ onAdd }: CategoryFormProps) {
                 type="button"
                 onClick={() => setColor(c)}
                 className="w-7 h-7 rounded-full border-2 transition-transform hover:scale-110"
-                style={{
-                  backgroundColor: c,
-                  borderColor: color === c ? 'white' : 'transparent',
-                }}
+                style={{ backgroundColor: c, borderColor: color === c ? 'var(--text-primary)' : 'transparent' }}
               />
             ))}
           </div>

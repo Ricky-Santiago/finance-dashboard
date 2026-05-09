@@ -14,7 +14,7 @@ export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps
       accessorKey: 'date',
       header: 'Fecha',
       cell: ({ row }) => (
-        <span className="text-gray-400 text-sm">
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           {new Date(row.getValue('date')).toLocaleDateString('es-PE')}
         </span>
       ),
@@ -23,7 +23,9 @@ export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps
       accessorKey: 'title',
       header: 'Título',
       cell: ({ row }) => (
-        <span className="text-white text-sm font-medium">{row.getValue('title')}</span>
+        <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+          {row.getValue('title')}
+        </span>
       ),
     },
     {
@@ -33,9 +35,7 @@ export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps
         const type = row.getValue('type') as string
         return (
           <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-            type === 'income'
-              ? 'bg-green-500/10 text-green-400'
-              : 'bg-red-500/10 text-red-400'
+            type === 'income' ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'
           }`}>
             {type === 'income' ? 'Ingreso' : 'Gasto'}
           </span>
@@ -48,11 +48,11 @@ export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps
       cell: ({ row }) => {
         const categoryId = row.getValue('category_id') as string | null
         const category = categories.find(c => c.id === categoryId)
-        if (!category) return <span className="text-gray-500 text-sm">—</span>
+        if (!category) return <span className="text-sm" style={{ color: 'var(--text-tertiary)' }}>—</span>
         return (
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full" style={{ backgroundColor: category.color }} />
-            <span className="text-gray-300 text-sm">{category.name}</span>
+            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{category.name}</span>
           </div>
         )
       },

@@ -1,6 +1,4 @@
-import {
-  flexRender,
-} from '@tanstack/react-table'
+import { flexRender } from '@tanstack/react-table'
 import { Search, X } from 'lucide-react'
 import { type Category } from '../data/schema'
 import { useCategoriesTable } from '../hooks/use-categories-table'
@@ -15,14 +13,25 @@ export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
     useCategoriesTable({ data, onDelete })
 
   return (
-    <div className="bg-gray-900 rounded-xl border border-gray-800">
-      <div className="p-4 border-b border-gray-800 flex items-center gap-2">
+    <div
+      className="rounded-xl"
+      style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+    >
+      <div
+        className="p-4 flex items-center gap-2"
+        style={{ borderBottom: '1px solid var(--border-color)' }}
+      >
         <input
           value={nameInput}
           onChange={e => setNameInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleSearch()}
           placeholder="Buscar categoría..."
-          className="bg-gray-800 text-white rounded-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-blue-500 flex-1"
+          className="rounded-lg px-3 py-1.5 text-sm outline-none flex-1"
+          style={{
+            backgroundColor: 'var(--bg-tertiary)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
+          }}
         />
         <button
           onClick={handleSearch}
@@ -34,7 +43,8 @@ export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
         {isFiltered && (
           <button
             onClick={handleReset}
-            className="text-gray-400 hover:text-white px-2 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
+            className="px-2 py-1.5 rounded-lg text-sm flex items-center gap-1 transition-colors"
+            style={{ color: 'var(--text-secondary)' }}
           >
             <X size={14} />
             Limpiar
@@ -46,11 +56,12 @@ export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
         <table className="w-full">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id} className="border-b border-gray-800">
+              <tr key={headerGroup.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                 {headerGroup.headers.map(header => (
                   <th
                     key={header.id}
-                    className="text-left text-gray-400 text-xs font-medium px-6 py-3 cursor-pointer hover:text-white transition-colors"
+                    className="text-left text-xs font-medium px-6 py-3 cursor-pointer transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
@@ -64,13 +75,17 @@ export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
           <tbody>
             {table.getRowModel().rows.length === 0 ? (
               <tr>
-                <td colSpan={4} className="text-center text-gray-400 text-sm py-8">
+                <td colSpan={4} className="text-center text-sm py-8" style={{ color: 'var(--text-secondary)' }}>
                   No hay categorías
                 </td>
               </tr>
             ) : (
               table.getRowModel().rows.map(row => (
-                <tr key={row.id} className="border-b border-gray-800 hover:bg-gray-800/50 transition-colors">
+                <tr
+                  key={row.id}
+                  style={{ borderBottom: '1px solid var(--border-color)' }}
+                  className="transition-colors hover:opacity-80"
+                >
                   {row.getVisibleCells().map(cell => (
                     <td key={cell.id} className="px-6 py-4">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
