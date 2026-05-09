@@ -42,58 +42,60 @@ export function SignUpForm() {
     navigate({ to: '/dashboard' })
   }
 
+  const inputStyle = {
+    backgroundColor: 'var(--bg-tertiary)',
+    color: 'var(--text-primary)',
+    border: '1px solid var(--border-color)',
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Nombre completo</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Nombre completo</label>
         <input
           {...register('fullName')}
           type="text"
           placeholder="Juan Pérez García"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.fullName && (
-          <span className="text-red-400 text-xs">{errors.fullName.message}</span>
-        )}
+        {errors.fullName && <span className="text-red-400 text-xs">{errors.fullName.message}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Email</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Email</label>
         <input
           {...register('email')}
           type="email"
           placeholder="tu@email.com"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.email && (
-          <span className="text-red-400 text-xs">{errors.email.message}</span>
-        )}
+        {errors.email && <span className="text-red-400 text-xs">{errors.email.message}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Contraseña</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Contraseña</label>
         <input
           {...register('password')}
           type="password"
           placeholder="••••••••"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.password && (
-          <span className="text-red-400 text-xs">{errors.password.message}</span>
-        )}
+        {errors.password && <span className="text-red-400 text-xs">{errors.password.message}</span>}
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-gray-400">Confirmar contraseña</label>
+        <label className="text-sm" style={{ color: 'var(--text-secondary)' }}>Confirmar contraseña</label>
         <input
           {...register('confirmPassword')}
           type="password"
           placeholder="••••••••"
-          className="bg-gray-800 text-white rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-lg px-4 py-2 outline-none text-sm"
+          style={inputStyle}
         />
-        {errors.confirmPassword && (
-          <span className="text-red-400 text-xs">{errors.confirmPassword.message}</span>
-        )}
+        {errors.confirmPassword && <span className="text-red-400 text-xs">{errors.confirmPassword.message}</span>}
       </div>
 
       {errors.root && (
@@ -110,7 +112,7 @@ export function SignUpForm() {
         {isSubmitting ? 'Creando cuenta...' : 'Crear cuenta'}
       </button>
 
-      <p className="text-center text-gray-400 text-sm">
+      <p className="text-center text-sm" style={{ color: 'var(--text-secondary)' }}>
         ¿Ya tienes cuenta?{' '}
         <Link to="/login" className="text-blue-400 hover:text-blue-300">
           Inicia sesión

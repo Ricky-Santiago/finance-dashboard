@@ -12,24 +12,23 @@ export function getCategoriesColumns({ onDelete }: GetColumnsProps): ColumnDef<C
       accessorKey: 'color',
       header: 'Color',
       cell: ({ row }) => (
-        <div
-          className="w-4 h-4 rounded-full"
-          style={{ backgroundColor: row.getValue('color') }}
-        />
+        <div className="w-4 h-4 rounded-full" style={{ backgroundColor: row.getValue('color') }} />
       ),
     },
     {
       accessorKey: 'name',
       header: 'Nombre',
       cell: ({ row }) => (
-        <span className="text-white text-sm">{row.getValue('name')}</span>
+        <span className="text-sm" style={{ color: 'var(--text-primary)' }}>
+          {row.getValue('name')}
+        </span>
       ),
     },
     {
       accessorKey: 'created_at',
       header: 'Creada',
       cell: ({ row }) => (
-        <span className="text-gray-400 text-sm">
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           {new Date(row.getValue('created_at')).toLocaleDateString('es-PE')}
         </span>
       ),
