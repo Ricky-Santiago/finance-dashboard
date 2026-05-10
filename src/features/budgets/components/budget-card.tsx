@@ -1,12 +1,13 @@
-import { Trash2 } from 'lucide-react'
+import { Trash2, Pencil } from 'lucide-react'
 import { type BudgetWithSpent } from '../hooks/use-budgets'
 
 interface BudgetCardProps {
   budget: BudgetWithSpent
   onDelete: (id: string) => Promise<void>
+  onEdit: (budget: BudgetWithSpent) => void
 }
 
-export function BudgetCard({ budget, onDelete }: BudgetCardProps) {
+export function BudgetCard({ budget, onDelete, onEdit }: BudgetCardProps) {
   const getBarColor = (percentage: number) => {
     if (percentage >= 90) return 'bg-red-500'
     if (percentage >= 75) return 'bg-yellow-500'
@@ -33,12 +34,20 @@ export function BudgetCard({ budget, onDelete }: BudgetCardProps) {
             {budget.category?.name ?? 'Sin categoría'}
           </span>
         </div>
-        <button
-          onClick={() => onDelete(budget.id)}
-          className="transition-colors text-gray-500 hover:text-red-400"
-        >
-          <Trash2 size={16} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onEdit(budget)}
+            className="text-gray-500 hover:text-blue-400 transition-colors"
+          >
+            <Pencil size={16} />
+          </button>
+          <button
+            onClick={() => onDelete(budget.id)}
+            className="text-gray-500 hover:text-red-400 transition-colors"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
       </div>
 
       <div className="flex items-end justify-between mb-2">
