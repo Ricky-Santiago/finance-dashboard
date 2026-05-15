@@ -1,4 +1,4 @@
-import { TrendingUp, TrendingDown, Wallet } from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet, AlertTriangle } from 'lucide-react'
 import { useDashboard } from '../hooks/use-dashboard'
 
 function formatCurrency(amount: number) {
@@ -9,7 +9,7 @@ function formatCurrency(amount: number) {
 }
 
 export function MetricCards() {
-  const { totalBalance, monthlyIncome, monthlyExpenses, isLoading } = useDashboard()
+  const { totalBalance, monthlyIncome, monthlyExpenses, isLoading, error } = useDashboard()
 
   if (isLoading) {
     return (
@@ -21,6 +21,18 @@ export function MetricCards() {
             style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
           />
         ))}
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div
+        className="rounded-xl p-6 flex items-center gap-3"
+        style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+      >
+        <AlertTriangle size={18} className="text-red-400 flex-shrink-0" />
+        <p className="text-sm text-red-400">{error}</p>
       </div>
     )
   }
