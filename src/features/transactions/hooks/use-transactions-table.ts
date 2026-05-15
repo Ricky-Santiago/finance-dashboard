@@ -14,16 +14,17 @@ import { getTransactionsColumns } from '../components/transactions-columns'
 interface UseTransactionsTableProps {
   data: Transaction[]
   categories: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
+  onEdit: (transaction: Transaction) => void
 }
 
-export function useTransactionsTable({ data, categories, onDelete }: UseTransactionsTableProps) {
+export function useTransactionsTable({ data, categories, onDelete, onEdit }: UseTransactionsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [titleInput, setTitleInput] = useState('')
   const [typeFilter, setTypeFilter] = useState<'all' | 'income' | 'expense'>('all')
 
-  const columns = getTransactionsColumns({ categories, onDelete })
+  const columns = getTransactionsColumns({ categories, onDelete, onEdit })
 
   const table = useReactTable({
     data,
@@ -38,12 +39,8 @@ export function useTransactionsTable({ data, categories, onDelete }: UseTransact
 
   const handleSearch = () => {
     const filters: ColumnFiltersState = []
-    if (titleInput.trim()) {
-      filters.push({ id: 'title', value: titleInput.trim() })
-    }
-    if (typeFilter !== 'all') {
-      filters.push({ id: 'type', value: typeFilter })
-    }
+    if (titleInput.trim()) filters.push({ id: 'title', value: titleInput.trim() })
+    if (typeFilter !== 'all') filters.push({ id: 'type', value: typeFilter })
     setColumnFilters(filters)
   }
 
@@ -55,14 +52,5 @@ export function useTransactionsTable({ data, categories, onDelete }: UseTransact
 
   const isFiltered = titleInput.trim() !== '' || typeFilter !== 'all'
 
-  return {
-    table,
-    titleInput,
-    setTitleInput,
-    typeFilter,
-    setTypeFilter,
-    handleSearch,
-    handleReset,
-    isFiltered,
-  }
+  return { table, titleInput, setTitleInput, typeFilter, setTypeFilter, handleSearch, handleReset, isFiltered }
 }

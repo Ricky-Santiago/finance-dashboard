@@ -42,6 +42,18 @@ export function useTransactions() {
       setTransactions((prev) => [newTx, ...prev]);
     }
   };
+  const updateTransaction = async (id: string, data: TransactionForm) => {
+  const { data: updated, error } = await supabase
+    .from('transactions')
+    .update({ ...data, amount: parseFloat(data.amount) })
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (!error && updated) {
+    setTransactions(prev => prev.map(t => t.id === id ? updated : t))
+  }
+}
 
   const deleteTransaction = async (id: string) => {
     const { error } = await supabase.from("transactions").delete().eq("id", id);
@@ -60,6 +72,7 @@ export function useTransactions() {
     categories,
     isLoading,
     addTransaction,
+    updateTransaction,
     deleteTransaction,
   };
 }

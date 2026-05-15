@@ -5,12 +5,13 @@ import { useCategoriesTable } from '../hooks/use-categories-table'
 
 interface CategoriesTableProps {
   data: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
+  onEdit: (category: Category) => void
 }
 
-export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
+export function CategoriesTable({ data, onDelete, onEdit }: CategoriesTableProps) {
   const { table, nameInput, setNameInput, handleSearch, handleReset, isFiltered } =
-    useCategoriesTable({ data, onDelete })
+    useCategoriesTable({ data, onDelete, onEdit })
 
   return (
     <div
@@ -83,8 +84,8 @@ export function CategoriesTable({ data, onDelete }: CategoriesTableProps) {
               table.getRowModel().rows.map(row => (
                 <tr
                   key={row.id}
-                  style={{ borderBottom: '1px solid var(--border-color)' }}
                   className="transition-colors hover:opacity-80"
+                  style={{ borderBottom: '1px solid var(--border-color)' }}
                 >
                   {row.getVisibleCells().map(cell => (
                     <td key={cell.id} className="px-6 py-4">

@@ -31,6 +31,19 @@ export function useCategories() {
     }
   }
 
+  const updateCategory = async (id: string, name: string, color: string) => {
+    const { data, error } = await supabase
+      .from('categories')
+      .update({ name, color })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (!error && data) {
+      setCategories(prev => prev.map(c => c.id === id ? data : c))
+    }
+  }
+
   const deleteCategory = async (id: string) => {
     const { error } = await supabase
       .from('categories')
@@ -46,5 +59,5 @@ export function useCategories() {
     fetchCategories()
   }, [])
 
-  return { categories, isLoading, addCategory, deleteCategory }
+  return { categories, isLoading, addCategory, updateCategory, deleteCategory }
 }

@@ -12,15 +12,16 @@ import { getCategoriesColumns } from '../components/categories-columns'
 
 interface UseCategoriesTableProps {
   data: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
+  onEdit: (category: Category) => void
 }
 
-export function useCategoriesTable({ data, onDelete }: UseCategoriesTableProps) {
+export function useCategoriesTable({ data, onDelete, onEdit }: UseCategoriesTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [nameInput, setNameInput] = useState('')
 
-  const columns = getCategoriesColumns({ onDelete })
+  const columns = getCategoriesColumns({ onDelete, onEdit })
 
   const table = useReactTable({
     data,
@@ -44,12 +45,5 @@ export function useCategoriesTable({ data, onDelete }: UseCategoriesTableProps) 
 
   const isFiltered = nameInput.trim() !== ''
 
-  return {
-    table,
-    nameInput,
-    setNameInput,
-    handleSearch,
-    handleReset,
-    isFiltered,
-  }
+  return { table, nameInput, setNameInput, handleSearch, handleReset, isFiltered }
 }

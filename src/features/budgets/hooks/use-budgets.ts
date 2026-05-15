@@ -22,9 +22,7 @@ export function useBudgets() {
     const [{ data: budgetData }, { data: catData }, { data: txData }] = await Promise.all([
       supabase.from('budgets').select('*').eq('month', month).eq('year', year),
       supabase.from('categories').select('*').order('name'),
-      supabase.from('transactions')
-        .select('amount, category_id, type')
-        .eq('type', 'expense'),
+      supabase.from('transactions').select('amount, category_id, type').eq('type', 'expense'),
     ])
 
     if (catData) setCategories(catData)
@@ -34,13 +32,10 @@ export function useBudgets() {
         const spent = txData
           .filter(tx => tx.category_id === budget.category_id)
           .reduce((sum, tx) => sum + tx.amount, 0)
-
         const percentage = Math.min((spent / budget.amount) * 100, 100)
         const category = catData.find(c => c.id === budget.category_id) ?? null
-
         return { ...budget, spent, percentage, category }
       })
-
       setBudgets(budgetsWithSpent)
     }
 
@@ -48,12 +43,10 @@ export function useBudgets() {
   }
 
   const addBudget = async (data: BudgetForm) => {
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
 
-  const { error } = await supabase
-    .from('budgets')
-    .insert({
+    const { error } = await supabase.from('budgets').insert({
       category_id: data.category_id,
       amount: parseFloat(data.amount),
       month: parseInt(data.month),
@@ -61,8 +54,22 @@ export function useBudgets() {
       user_id: user.id,
     })
 
-  if (!error) fetchData()
-}
+    if (!error) fetchData()
+  }
+
+  const updateBudget = async (id: string, data: BudgetForm) => {
+    const { error } = await supabase
+      .from('budgets')
+      .update({
+        category_id: data.category_id,
+        amount: parseFloat(data.amount),
+        month: parseInt(data.month),
+        year: parseInt(data.year),
+      })
+      .eq('id', id)
+
+    if (!error) fetchData()
+  }
 
   const deleteBudget = async (id: string) => {
     const { error } = await supabase.from('budgets').delete().eq('id', id)
@@ -73,5 +80,5 @@ export function useBudgets() {
     fetchData()
   }, [])
 
-  return { budgets, categories, isLoading, addBudget, deleteBudget }
+  return { budgets, categories, isLoading, addBudget, updateBudget, deleteBudget }
 }

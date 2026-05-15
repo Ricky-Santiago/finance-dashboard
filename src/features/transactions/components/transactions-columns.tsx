@@ -1,14 +1,15 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { Trash2 } from 'lucide-react'
+import { Trash2, Pencil } from 'lucide-react'
 import { type Transaction } from '../data/schema'
 import { type Category } from '@/features/categories/data/schema'
 
 interface GetColumnsProps {
   categories: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
+  onEdit: (transaction: Transaction) => void
 }
 
-export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps): ColumnDef<Transaction>[] {
+export function getTransactionsColumns({ categories, onDelete, onEdit }: GetColumnsProps): ColumnDef<Transaction>[] {
   return [
     {
       accessorKey: 'date',
@@ -76,12 +77,20 @@ export function getTransactionsColumns({ categories, onDelete }: GetColumnsProps
       id: 'actions',
       header: '',
       cell: ({ row }) => (
-        <button
-          onClick={() => onDelete(row.original.id)}
-          className="text-gray-500 hover:text-red-400 transition-colors"
-        >
-          <Trash2 size={16} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onEdit(row.original)}
+            className="text-gray-500 hover:text-blue-400 transition-colors"
+          >
+            <Pencil size={16} />
+          </button>
+          <button
+            onClick={() => onDelete(row.original.id)}
+            className="text-gray-500 hover:text-red-400 transition-colors"
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
       ),
     },
   ]
