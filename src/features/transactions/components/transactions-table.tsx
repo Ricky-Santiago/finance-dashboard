@@ -8,13 +8,14 @@ interface TransactionsTableProps {
   data: Transaction[]
   categories: Category[]
   onDelete: (id: string) => Promise<void>
+  onEdit: (transaction: Transaction) => void
 }
 
-export function TransactionsTable({ data, categories, onDelete }: TransactionsTableProps) {
+export function TransactionsTable({ data, categories, onDelete, onEdit }: TransactionsTableProps) {
   const {
     table, titleInput, setTitleInput, typeFilter,
     setTypeFilter, handleSearch, handleReset, isFiltered,
-  } = useTransactionsTable({ data, categories, onDelete })
+  } = useTransactionsTable({ data, categories, onDelete, onEdit })
 
   const inputStyle = {
     backgroundColor: 'var(--bg-tertiary)',
