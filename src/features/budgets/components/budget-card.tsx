@@ -3,7 +3,7 @@ import { type BudgetWithSpent } from '../hooks/use-budgets'
 
 interface BudgetCardProps {
   budget: BudgetWithSpent
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (budget: BudgetWithSpent) => void
 }
 

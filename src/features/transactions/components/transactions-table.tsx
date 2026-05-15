@@ -7,7 +7,7 @@ import { useTransactionsTable } from '../hooks/use-transactions-table'
 interface TransactionsTableProps {
   data: Transaction[]
   categories: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (transaction: Transaction) => void
 }
 

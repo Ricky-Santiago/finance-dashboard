@@ -3,7 +3,7 @@ import { Trash2, Pencil } from 'lucide-react'
 import { type Category } from '../data/schema'
 
 interface GetColumnsProps {
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (category: Category) => void
 }
 

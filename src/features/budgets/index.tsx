@@ -3,10 +3,21 @@ import { BudgetFormComponent } from './components/budget-form'
 import { BudgetCard } from './components/budget-card'
 import { EditBudgetDialog } from './components/edit-budget-dialog'
 import { useBudgets, type BudgetWithSpent } from './hooks/use-budgets'
+import { ConfirmDialog } from '@/components/confirm-dialog'
 
 export function BudgetsFeature() {
   const { budgets, categories, isLoading, addBudget, updateBudget, deleteBudget } = useBudgets()
   const [editingBudget, setEditingBudget] = useState<BudgetWithSpent | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDelete = async () => {
+    if (!deletingId) return
+    setIsDeleting(true)
+    await deleteBudget(deletingId)
+    setIsDeleting(false)
+    setDeletingId(null)
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -32,7 +43,7 @@ export function BudgetsFeature() {
             <BudgetCard
               key={budget.id}
               budget={budget}
-              onDelete={deleteBudget}
+              onDelete={(id) => setDeletingId(id)}
               onEdit={setEditingBudget}
             />
           ))}
@@ -44,6 +55,15 @@ export function BudgetsFeature() {
         categories={categories}
         onClose={() => setEditingBudget(null)}
         onSave={updateBudget}
+      />
+
+      <ConfirmDialog
+        open={!!deletingId}
+        title="Eliminar presupuesto"
+        description="¿Estás seguro? Esta acción no se puede deshacer y eliminará el presupuesto permanentemente."
+        onConfirm={handleDelete}
+        onCancel={() => setDeletingId(null)}
+        isLoading={isDeleting}
       />
     </div>
   )

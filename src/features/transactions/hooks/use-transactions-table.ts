@@ -14,7 +14,7 @@ import { getTransactionsColumns } from '../components/transactions-columns'
 interface UseTransactionsTableProps {
   data: Transaction[]
   categories: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (transaction: Transaction) => void
 }
 

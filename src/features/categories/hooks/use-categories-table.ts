@@ -12,7 +12,7 @@ import { getCategoriesColumns } from '../components/categories-columns'
 
 interface UseCategoriesTableProps {
   data: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (category: Category) => void
 }
 

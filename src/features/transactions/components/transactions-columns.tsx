@@ -5,7 +5,7 @@ import { type Category } from '@/features/categories/data/schema'
 
 interface GetColumnsProps {
   categories: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (transaction: Transaction) => void
 }
 

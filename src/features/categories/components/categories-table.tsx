@@ -5,7 +5,7 @@ import { useCategoriesTable } from '../hooks/use-categories-table'
 
 interface CategoriesTableProps {
   data: Category[]
-  onDelete: (id: string) => Promise<void>
+  onDelete: (id: string) => void
   onEdit: (category: Category) => void
 }
 
