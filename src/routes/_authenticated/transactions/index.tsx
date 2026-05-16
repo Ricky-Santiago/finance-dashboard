@@ -1,15 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { AuthenticatedLayout } from '@/components/layout/authenticated-layout'
-import { TransactionsFeature } from '@/features/transactions'
+import { lazy, Suspense } from 'react'
+
+const TransactionsPage = lazy(() => import('./transactions-page.tsx'))
 
 export const Route = createFileRoute('/_authenticated/transactions/')({
-  component: TransactionsPage,
+  component: () => (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
+        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <TransactionsPage />
+    </Suspense>
+  ),
 })
-
-function TransactionsPage() {
-  return (
-    <AuthenticatedLayout title="Transacciones">
-      <TransactionsFeature />
-    </AuthenticatedLayout>
-  )
-}

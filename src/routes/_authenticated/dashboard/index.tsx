@@ -1,26 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { AuthenticatedLayout } from '@/components/layout/authenticated-layout'
-import { MetricCards } from '@/features/dashboard/components/metric-cards'
-import { ExpensesChart } from '@/features/dashboard/components/expenses-chart'
-import { RecentTransactions } from '@/features/dashboard/components/recent-transactions'
-import { useAuth } from '@/context/auth-context'
+import { lazy, Suspense } from 'react'
+
+const DashboardPage = lazy(() => import('./dashboard-page.tsx'))
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
-  component: DashboardPage,
-})
-
-function DashboardPage() {
-  const { profile, user } = useAuth()
-  const displayName = profile?.full_name ?? user?.email
-
-  return (
-    <AuthenticatedLayout title="Dashboard">
-      <div className="flex flex-col gap-6">
-        <p className="text-gray-400">Bienvenido, {displayName} 👋</p>
-        <MetricCards />
-        <ExpensesChart />
-        <RecentTransactions />
+  component: () => (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--bg-primary)' }}>
+        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
       </div>
-    </AuthenticatedLayout>
-  )
-}
+    }>
+      <DashboardPage />
+    </Suspense>
+  ),
+})
